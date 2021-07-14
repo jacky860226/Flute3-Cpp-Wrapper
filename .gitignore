@@ -1,5 +1,7 @@
 .vscode
+.DS_store
 *.o
 *.d
 *.a
-.DS_store
+test
+test.svg
