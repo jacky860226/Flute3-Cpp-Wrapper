@@ -27,7 +27,7 @@ public:
         : Branches(std::move(O.Branches)), Length(O.Length), Degree(O.Degree) {}
     void print(std::ostream &Out) const;
     void plot(std::ostream &Out) const;
-    void writeSVG(std::ostream &Out) const;
+    void writeSVG(std::ostream &Out, double Scale = 1.0) const;
   };
   static FluteWrapper *getInstance();
   ~FluteWrapper();

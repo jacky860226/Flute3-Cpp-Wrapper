@@ -22,7 +22,7 @@ void FluteWrapper::Tree::plot(std::ostream &Out) const {
         << "\n\n";
   }
 }
-void FluteWrapper::Tree::writeSVG(std::ostream &Out) const {
+void FluteWrapper::Tree::writeSVG(std::ostream &Out, double Scale) const {
   int X_min = std::numeric_limits<int>::max();
   int Y_min = std::numeric_limits<int>::max();
   int X_max = std::numeric_limits<int>::min();
@@ -36,15 +36,18 @@ void FluteWrapper::Tree::writeSVG(std::ostream &Out) const {
 
   int Dx = X_max - X_min;
   int Dy = Y_max - Y_min;
-  const int Sz = std::max(std::max(Dx, Dy) / 400, 1);
-  const int HSz = Sz / 2;
 
-  Out << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"" << X_min << ' '
-      << Y_min << ' ' << Dx << ' ' << Dy << "\">\n";
+  const double StrokeWidth = 1;
+
+  Out << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\""
+      << (X_min - 1) * Scale << ' ' << (Y_min - 1) * Scale << ' '
+      << (Dx + 2) * Scale << ' ' << (Dy + 2) * Scale << "\""
+      << " style=\"width:100%\" stroke=\"black\" stroke-width=\"" << StrokeWidth
+      << "\">\n";
   for (auto &B : Branches) {
-    Out << "<line x1=\"" << B.X << "\" y1=\"" << B.Y << "\" x2=\""
-        << Branches.at(B.Neighbor).X << "\" y2=\"" << Branches.at(B.Neighbor).Y
-        << "\" style=\"stroke: black; stroke-width: " << HSz / 2 << "\"/>\n";
+    Out << "<line x1=\"" << B.X * Scale << "\" y1=\"" << B.Y * Scale
+        << "\" x2=\"" << Branches.at(B.Neighbor).X * Scale << "\" y2=\""
+        << Branches.at(B.Neighbor).Y * Scale << "\"/>\n";
   }
   Out << "</svg>\n";
 }

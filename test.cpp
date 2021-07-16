@@ -4,8 +4,8 @@
 
 int main() {
   auto Wrapper = Flute::FluteWrapper::getInstance();
-  std::vector<int> X = {2000, 8000, 6000, 5000, 3000, 4000};
-  std::vector<int> Y = {3000, 2000, 6000, 4000, 5000, 2000};
+  std::vector<int> X = {20, 80, 60, 50, 30, 40};
+  std::vector<int> Y = {30, 20, 60, 40, 50, 20};
 
   auto FluteTree = Wrapper->runFlute(X, Y);
 
@@ -16,9 +16,10 @@ int main() {
   FluteTree.print(std::cout);
   std::cout << "FLUTE plottree\n";
   FluteTree.plot(std::cout);
-  std::cout << "FLUTE writeSVG\n";
-  std::ofstream Fout("test.svg");
-  FluteTree.writeSVG(Fout);
+  auto SVG_Name = "test.svg";
+  std::cout << "FLUTE writeSVG: " << SVG_Name << '\n';
+  std::ofstream Fout(SVG_Name);
+  FluteTree.writeSVG(Fout, 5);
 
   return 0;
 }
