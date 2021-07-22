@@ -1,5 +1,6 @@
 .vscode
 .DS_store
+build
 *.o
 *.d
 *.a

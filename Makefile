@@ -17,9 +17,9 @@ TEST_OBJS := $(TEST_SRCS:.cpp=.o)
 all: $(TARGET)
 
 $(TARGET): $(FLUTE_LIB) $(FLUTEWRAPPER_OBJS)
-	ar -rcs temp.a $(FLUTEWRAPPER_OBJS)
-	printf "create $@\naddlib temp.a\naddlib $(FLUTE_LIB)\nsave\nend" | ar -M
-	rm temp.a
+	mkdir -p build
+	cd build && ar -x ../$(FLUTE_LIB)
+	ar -rcs $(TARGET) $(FLUTEWRAPPER_OBJS) build/*.o
 
 $(FLUTE_LIB):
 	mkdir -p $(FLUTE_BUILD_DIR)
@@ -36,7 +36,7 @@ $(TEST_OBJS): $(TEST_SRCS)
 	$(CXX) $(CXXFLAGS) $(WARNINGFLAGS) -MMD -c $< -o $@
 
 clean:
-	rm -rf $(TARGET) $(OBJS) $(DEPS)
+	rm -rf $(TARGET) $(OBJS) build/*.o $(DEPS)
 	if [ -d "$(FLUTE_BUILD_DIR)" ]; then $(MAKE) -C $(FLUTE_BUILD_DIR) clean; fi
 
 .PHONY: all clean test
