@@ -27,7 +27,7 @@ $(FLUTE_LIB):
 	$(MAKE) -C $(FLUTE_BUILD_DIR)
 
 $(FLUTEWRAPPER_OBJS): $(FLUTEWRAPPER_SRCS)
-	$(CXX) $(CXXFLAGS) $(WARNINGFLAGS) -isystem $(FLUTE_DIR) -MMD -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(WARNINGFLAGS) -MMD -c $< -o $@
 
 test: $(TEST_OBJS) $(TARGET)
 	$(CXX) -o $@ $^ -lstdc++

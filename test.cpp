@@ -10,8 +10,8 @@ int main() {
   auto FluteTree = Wrapper->runFlute(X, Y);
 
   std::cout << "FLUTE wirelength only = " << Wrapper->runFlute_wl(X, Y) << '\n';
-  std::cout << "FLUTE wirelength = " << FluteTree.Length << '\n';
-  std::cout << "FLUTE degree = " << FluteTree.Degree << '\n';
+  std::cout << "FLUTE wirelength = " << FluteTree.getLength() << '\n';
+  std::cout << "FLUTE degree = " << FluteTree.getDegree() << '\n';
   std::cout << "FLUTE printtree\n";
   FluteTree.print(std::cout);
   std::cout << "FLUTE plottree\n";

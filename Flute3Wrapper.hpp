@@ -1,4 +1,5 @@
 #pragma once
+#include "flute3/flute.h"
 #include <memory>
 #include <ostream>
 #include <vector>
@@ -10,25 +11,22 @@ class FluteWrapper {
   FluteWrapper();
 
 public:
-  struct Branch {
-    int X;
-    int Y;
-    int Neighbor;
-    Branch(int X, int Y, int Neighbor) : X(X), Y(Y), Neighbor(Neighbor) {}
-  };
+  class Tree {
+    Flute::Tree WrapperTree;
 
-  struct Tree {
-    const std::vector<Branch> Branches;
-    const int Length;
-    const int Degree;
-    Tree(std::vector<Branch> &&Branches, int Length, int Degree)
-        : Branches(std::move(Branches)), Length(Length), Degree(Degree) {}
-    Tree(Tree &&O)
-        : Branches(std::move(O.Branches)), Length(O.Length), Degree(O.Degree) {}
+  public:
+    Tree(Flute::Tree &&WrapperTree) : WrapperTree(std::move(WrapperTree)) {}
+    ~Tree() { Flute::free_tree(WrapperTree); }
+    const Branch *getBranches() const { return WrapperTree.branch; }
+    int getBranchesSize() const { return 2 * WrapperTree.deg - 2; }
+    int getLength() const { return WrapperTree.length; }
+    int getDegree() const { return WrapperTree.deg; }
+
     void print(std::ostream &Out) const;
     void plot(std::ostream &Out) const;
     void writeSVG(std::ostream &Out, double Scale = 1.0) const;
   };
+
   static FluteWrapper *getInstance();
   ~FluteWrapper();
   Tree runFlute(std::vector<int> &X, std::vector<int> &Y);
